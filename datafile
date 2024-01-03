@@ -1,0 +1,22 @@
+map("Mlb_players", (mlb) => {
+    return {
+        TeamName: mlb.Team,
+        BodyHeight:mlb.Weight,
+        Count:1,
+        Average:0
+    }
+})
+
+
+groupBy(x => ({ TeamName: x.TeamName }))
+.aggregate(g => { 
+    const totalBodyHeight = g.values.reduce((count, val) => val.BodyHeight + count, 0);
+    const totalCount = g.values.reduce((count, val) => val.Count + count, 0);
+    const average = totalBodyHeight / totalCount;
+    return {
+        TeamName: g.key.TeamName,
+        BodyHeight: totalBodyHeight,
+        Count: totalCount,
+        Average: isNaN(average) ? 0 : average 
+    };
+})
