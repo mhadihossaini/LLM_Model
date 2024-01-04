@@ -1,8 +1,24 @@
-SELECT TOP 1 P.FirstName, P.LastName, SUM(SOH.TotalDue) AS TotalRevenue
-FROM Sales.SalesOrderHeader AS SOH
+SELECT 
+    TOP 1 P.FirstName, P.LastName, SUM(SOH.TotalDue) AS TotalRevenue
+FROM 
+    Sales.SalesOrderHeader AS SOH
 JOIN Sales.SalesPerson AS SP ON SOH.SalesPersonID = SP.BusinessEntityID
 JOIN Person.Person AS P ON SP.BusinessEntityID = P.BusinessEntityID
-GROUP BY P.FirstName, P.LastName
-ORDER BY TotalRevenue DESC;
+GROUP BY 
+    P.FirstName, P.LastName
+ORDER BY 
+    TotalRevenue DESC;
 
+
+
+SELECT 
+	TOP 1 FirstName, LastName, SUM(f.Freight) AS TotalSales 
+FROM 
+	FactInternetSales AS f
+	JOIN DimCustomer AS c ON c.CustomerKey =  f.CustomerKey
+	JOIN DimDate AS d ON d.DateKey = f.DueDateKey
+WHERE 
+	d.CalendarQuarter = 4
+GROUP BY 
+	FirstName, LastName
 
