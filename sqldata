@@ -9,7 +9,7 @@ GROUP BY
 ORDER BY 
     TotalRevenue DESC;
 
-
+================================================================================================================
 
 SELECT 
 	TOP 1 FirstName, LastName, SUM(f.Freight) AS TotalSales 
@@ -21,4 +21,28 @@ WHERE
 	d.CalendarQuarter = 4
 GROUP BY 
 	FirstName, LastName
+
+=================================================================================================================
+SELECT 
+	 SUM(f.OrderQuantity) AS TotalSales 
+FROM 
+	FactInternetSales AS f
+	JOIN DimSalesTerritory AS st ON st.SalesTerritoryKey =  f.SalesTerritoryKey
+	JOIN DimGeography AS dg ON dg.SalesTerritoryKey = st.SalesTerritoryKey
+WHERE 
+	dg.StateProvinceName = 'Ontario' AND YEAR(f.OrderDate) = '2012' AND DATEPART(week, f.OrderDate) = 39
+GROUP BY 
+	dg.StateProvinceName
+
+==============================================================================================================
+
+SELECT 
+	SUM(OrderQuantity) AS Total 
+FROM FactInternetSales f
+	JOIN DimGeography AS g ON f.SalesTerritoryKey = g.SalesTerritoryKey
+WHERE 
+	g.StateProvinceName = 'Ontario' 
+	AND YEAR(f.OrderDate) = '2012'
+	AND DATEPART(WEEK, f.OrderDate) = 39;
+================================================================================================================
 
