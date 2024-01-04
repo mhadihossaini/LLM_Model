@@ -1,0 +1,11 @@
+print(df['I'].nunique())
+
+df['T'] =  df['Q']*df['P']
+
+country_order_counts = df.groupby('C')['T'].sum()
+
+print(country_order_counts.idxmax())
+print(country_order_counts.max())
+
+print(country_order_counts.idxmin())
+print(country_order_counts.min())
